@@ -142,7 +142,22 @@ class RobustConv2(nn.Module):
         if self.gamma is not None:
             x = x.mul(self.gamma.reshape(1, -1, 1, 1)) 
         return x
+
+def Guassian_noise_layer(input_layer, std):
+    noise = std * torch.randn_like(input_layer, dtype=torch.float32)
+    return input_layer + noise
+
+class AddGaussianNoise(nn.Module):
+    def __init__(self, c1, c2, k=1, s=1, act=True,mean=0., std=1.):
+        super(AddGaussianNoise, self).__init__()
+        self.std = std
+        self.mean = mean
+        
+    def __call__(self, tensor):
+        return Guassian_noise_layer(tensor,std=1)
     
+    def __repr__(self):
+        return self.__class__.__name__ + '(mean={0}, std={1})'.format(self.mean, self.std)
 
 def DWConv(c1, c2, k=1, s=1, act=True):
     # Depthwise convolution
