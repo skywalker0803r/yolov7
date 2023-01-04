@@ -13,6 +13,7 @@ anchors:
 backbone:
   # [from, number, module, args]
   [[-1, 1, Conv, [32, 3, 1]],  # 0
+   [-1, 1, AddGaussianNoise,[32, 3, 1]],
   
    [-1, 1, Conv, [64, 3, 2]],  # 1-P1/2      
    [-1, 1, Conv, [64, 3, 1]],
